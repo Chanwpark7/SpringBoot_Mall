@@ -1,6 +1,7 @@
 package com.fullstack.springboot;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +10,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fullstack.springboot.dto.PageRequestDTO;
 import com.fullstack.springboot.dto.PageResponseDTO;
 import com.fullstack.springboot.dto.TodoDTO;
 import com.fullstack.springboot.entity.Todo;
+import com.fullstack.springboot.entity.mall.Product;
 import com.fullstack.springboot.repository.TodoRepository;
+import com.fullstack.springboot.repository.mall.ProductRepository;
 import com.fullstack.springboot.service.TodoService;
 
 import lombok.extern.log4j.Log4j2;
@@ -28,6 +32,9 @@ class MallApplicationTests {
 	
 	@Autowired
 	TodoService todoService;
+	
+	@Autowired
+	ProductRepository productRepository;
 	
 	@Test
 //	  public void testInsert() {
@@ -116,17 +123,63 @@ class MallApplicationTests {
 //
 //	  }
 
-	  public void testList() {
+//	  public void testList() {
+//
+//	    PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+//	    .page(2)
+//	    .size(10)
+//	    .build();
+//
+//	    PageResponseDTO<TodoDTO> response = todoService.list(pageRequestDTO);
+//
+//	    log.info(response);
+//
+//	  }
 
-	    PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
-	    .page(2)
-	    .size(10)
-	    .build();
+//	public void testInsert() {
+//
+//	    for (int i = 0; i < 10; i++) {
+//
+//	      Product product = Product.builder()
+//	      .pname("상품"+i)
+//	      .price(100*i)
+//	      .pdesc("상품설명 " + i)
+//	      .build();
+//	      
+//	      //2개의 이미지 파일 추가 
+//	      product.addImageString("IMAGE1.jpg");
+//	      product.addImageString("IMAGE2.jpg");
+//	      
+//	      productRepository.save(product);
+//
+//	      log.info("-------------------");
+//	    }
+//	  }
+	
+//	@Transactional
+//	public void testRead() {
+//
+//	    Long pno = 1L;
+//
+//	    Optional<Product> result = productRepository.findById(pno);
+//
+//	    Product product = result.orElseThrow();
+//
+//	    log.info(product); // --------- 1
+//	    log.info(product.getImageList()); // ---------------------2
+//
+//	  }
+	
+	 public void testRead2() {
 
-	    PageResponseDTO<TodoDTO> response = todoService.list(pageRequestDTO);
+	    Long pno = 1L;
 
-	    log.info(response);
+	    Optional<Product> result = productRepository.selectOne(pno);
 
+	    Product product = result.orElseThrow();
+
+	    log.info(product);
+	    log.info(product.getImageList());
+	    
 	  }
-
 }
