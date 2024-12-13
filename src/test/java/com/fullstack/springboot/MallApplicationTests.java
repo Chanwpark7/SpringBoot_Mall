@@ -16,8 +16,10 @@ import com.fullstack.springboot.dto.PageRequestDTO;
 import com.fullstack.springboot.dto.PageResponseDTO;
 import com.fullstack.springboot.dto.TodoDTO;
 import com.fullstack.springboot.entity.Todo;
+import com.fullstack.springboot.entity.mall.FullStackMember;
 import com.fullstack.springboot.entity.mall.Product;
 import com.fullstack.springboot.repository.TodoRepository;
+import com.fullstack.springboot.repository.mall.FullStackMemberRepository;
 import com.fullstack.springboot.repository.mall.ProductRepository;
 import com.fullstack.springboot.service.TodoService;
 
@@ -35,6 +37,9 @@ class MallApplicationTests {
 	
 	@Autowired
 	ProductRepository productRepository;
+	
+	@Autowired
+	FullStackMemberRepository fullStackMemberRepository;
 	
 	@Test
 //	  public void testInsert() {
@@ -65,16 +70,15 @@ class MallApplicationTests {
 
 //	  public void testModify() {
 //
-//	    Long tno = 33L;
+//	    Long pno = 1L;
 //
-//	    java.util.Optional<Todo> result = todoRepository.findById(tno); //java.util 패키지의 Optional
+//	    java.util.Optional<Product> result = productRepository.findById(pno); //java.util 패키지의 Optional
 //
-//	    Todo todo = result.orElseThrow();
-//	    todo.changeTitle("Modified 33!!!...");
-//	    todo.changeComplete(true);
-//	    todo.changeDueDate(LocalDate.of(2023,10,10));
+//	    Product product = result.orElseThrow();
+//	    product.changeName("Modified 33!!!...");
+//	    product.changeDel(true);
 //
-//	    todoRepository.save(todo);
+//	    productRepository.save(product);
 //
 //	  }
 
@@ -170,16 +174,22 @@ class MallApplicationTests {
 //
 //	  }
 	
-	 public void testRead2() {
-
-	    Long pno = 1L;
-
-	    Optional<Product> result = productRepository.selectOne(pno);
-
-	    Product product = result.orElseThrow();
-
-	    log.info(product);
-	    log.info(product.getImageList());
-	    
-	  }
+//	 public void testRead2() {
+//
+//	    Long pno = 1L;
+//
+//	    Optional<Product> result = productRepository.selectOne(pno);
+//
+//	    Product product = result.orElseThrow();
+//
+//	    log.info(product);
+//	    log.info(product.getImageList());
+//	    
+//	  }
+	
+	public void testRead() {
+		String email = "user1@abc.com";
+		FullStackMember member = fullStackMemberRepository.getWithRoles(email);
+		log.error("멤버 정보 : "+ member);
+	}
 }

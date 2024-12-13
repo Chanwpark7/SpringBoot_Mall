@@ -6,11 +6,13 @@ import java.util.stream.Collectors;
 
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -82,7 +84,8 @@ public class ProductController {
     return fileUtil.getFile(fileName);
 
   }
-
+  
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
   @GetMapping("/list")
   public PageResponseDTO<ProductDTO> list(PageRequestDTO pageRequestDTO) {
 
@@ -102,7 +105,7 @@ public class ProductController {
   public Map<String, String> modify(@PathVariable(name="pno")Long pno, ProductDTO productDTO) {
 
     productDTO.setPno(pno); 
-
+    
     ProductDTO oldProductDTO = productService.get(pno);
 
     //기존의 파일들 (데이터베이스에 존재하는 파일들 - 수정 과정에서 삭제되었을 수 있음)  
@@ -123,6 +126,9 @@ public class ProductController {
       uploadedFileNames.addAll(currentUploadFileNames);
 
     }
+    
+    System.out.println(productDTO);
+    
     //수정 작업 
     productService.modify(productDTO);
 
@@ -149,6 +155,7 @@ public class ProductController {
     productService.remove(pno);
 
     fileUtil.deleteFiles(oldFileNames);
+    System.out.println(oldFileNames);
 
     return Map.of("RESULT", "SUCCESS");
 

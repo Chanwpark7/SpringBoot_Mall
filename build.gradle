@@ -34,6 +34,11 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	implementation 'org.modelmapper:modelmapper:3.1.1'
 	implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.19'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	
+	//JSON 문자열 토큰을 이용하는 라이브러리 추가. Gson 이라는 애를 많이 씀
+	implementation group: 'com.google.code.gson', name: 'gson', version: '2.11.0'
+	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.12.6'
 }
 
 tasks.named('test') {
