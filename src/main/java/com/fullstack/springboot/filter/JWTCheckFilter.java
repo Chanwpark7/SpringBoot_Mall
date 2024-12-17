@@ -77,8 +77,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 			String password = (String)claims.get("password");
 			String name = (String)claims.get("name");
 			Boolean foBoolean = (Boolean)claims.get("formSns");
-			List<String> roleSet = (ArrayList<String>)claims.get("roleNames");
-			Set<String> roleNames = new HashSet<String>(roleSet);
+			Set<String> roleNames = new HashSet<String>((ArrayList<String>)claims.get("roleNames"));
 			
 			log.error(roleNames);
 			

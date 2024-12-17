@@ -10,6 +10,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.fullstack.springboot.util.CustomJWTException;
+
 /**
  * CustomControllerAdvice
  */
@@ -31,5 +33,10 @@ public class CustomControllerAdvice {
       String msg = e.getMessage();
 
       return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(Map.of("msg", msg));
+  }
+  
+  protected ResponseEntity<?> handleJWTException(CustomJWTException e){
+	  String msg = e.getMessage();
+	  return ResponseEntity.ok(Map.of("error", msg));
   }
 }

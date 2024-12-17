@@ -35,28 +35,28 @@ public class CustomSecurityConfig {
 	}
 	
 	@Bean
-	   public SecurityFilterChain filterChain(HttpSecurity http)throws Exception{
-	      log.warn("시큐어 콘피그");
-	      http.cors(t -> {
-	         t.configurationSource(corsConfogurationSource());
-	      });
-	      http.sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-	      
-	      http.csrf(c->c.disable());
-	      http.formLogin(
-	    		  c-> {c.loginPage("/api/member/login");
-	         c.successHandler(new APILoginSuccessHandler());
-	         c.failureHandler(new APILoginFailHandler());
-	         });
-	      
-	      //사용자 인증을 처리하는 필터전에 토큰이 필요한 경로에 대한 필터를 수행하는 필터를 추가함.
-	      http.addFilterBefore(new JWTCheckFilter(), UsernamePasswordAuthenticationFilter.class);
-	      http.exceptionHandling(expConfig -> {
-	    	  expConfig.accessDeniedHandler(new CustomAccDeniedHandler());
-	      });
-	      
-	      return http.build();
-	   }
+   public SecurityFilterChain filterChain(HttpSecurity http)throws Exception{
+      log.warn("시큐어 콘피그");
+      http.cors(t -> {
+         t.configurationSource(corsConfogurationSource());
+      });
+      http.sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+      
+      http.csrf(c->c.disable());
+      http.formLogin(
+    		  c-> {c.loginPage("/api/member/login");
+         c.successHandler(new APILoginSuccessHandler());
+         c.failureHandler(new APILoginFailHandler());
+         });
+      
+      //사용자 인증을 처리하는 필터전에 토큰이 필요한 경로에 대한 필터를 수행하는 필터를 추가함.
+      http.addFilterBefore(new JWTCheckFilter(), UsernamePasswordAuthenticationFilter.class);
+      http.exceptionHandling(expConfig -> {
+    	  expConfig.accessDeniedHandler(new CustomAccDeniedHandler());
+      });
+      
+      return http.build();
+   }
 
    
    @Bean
