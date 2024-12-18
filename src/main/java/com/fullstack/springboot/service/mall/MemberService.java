@@ -6,13 +6,14 @@ package com.fullstack.springboot.service.mall;
 import java.util.stream.Collectors;
 
 import com.fullstack.springboot.dto.malldto.FullStackMemberDTO;
+import com.fullstack.springboot.dto.malldto.MemberModifyDTO;
 import com.fullstack.springboot.entity.mall.FullStackMember;
 
 public interface MemberService {
 
 	FullStackMemberDTO getKakaoMember(String accessToken);
 	
-	
+	void modifyMember(MemberModifyDTO memberModifyDTO);
 	
 	default FullStackMemberDTO entityToDTO(FullStackMember member) {
 

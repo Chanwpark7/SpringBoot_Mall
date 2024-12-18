@@ -15,6 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fullstack.springboot.dto.malldto.FullStackMemberDTO;
 import com.fullstack.springboot.dto.malldto.FullStackRole;
+import com.fullstack.springboot.dto.malldto.MemberModifyDTO;
 import com.fullstack.springboot.entity.mall.FullStackMember;
 import com.fullstack.springboot.repository.mall.FullStackMemberRepository;
 
@@ -113,4 +114,16 @@ public class MemberServiceImpl implements MemberService {
 	   return member;
 
 	  }
+	 
+	 @Override
+	public void modifyMember(MemberModifyDTO memberModifyDTO) {
+		 Optional<FullStackMember> result = fullStackMemberRepository.findById(memberModifyDTO.getEmail());
+		 
+		 FullStackMember member = result.orElseThrow();
+		 
+		 member.changePw(passwordEncoder.encode(memberModifyDTO.getPassword()));
+		 member.changeSocial(false);
+		 
+		 fullStackMemberRepository.save(member);
+	}
 }
